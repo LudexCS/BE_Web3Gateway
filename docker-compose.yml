@@ -1,0 +1,6 @@
+services:
+  useraccount:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: gomdadi/web3gateway:latest
