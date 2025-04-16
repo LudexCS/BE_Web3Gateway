@@ -21,6 +21,7 @@ router.post('/siwe', async (req: Request, res: Response) => {
 router.post('/wallet', async (req: Request, res: Response) => {
     try {
         await linkWalletControl(req);
+        res.status(200).json({ message: "Wallet successfully registered" });
     } catch (error) {
         if (error instanceof Error) {
             res.status(400).json({message: error.message});
