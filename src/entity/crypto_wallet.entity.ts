@@ -10,4 +10,7 @@ export class CryptoWallet {
 
     @Column({ name: 'address', unique: true })
     address: string;
+
+    @Column({ name: 'registered_at' })
+    registeredAt: Date;
 }
