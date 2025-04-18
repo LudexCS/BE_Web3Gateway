@@ -2,7 +2,7 @@ import redis from "../config/redis.config";
 
 export const storeSiwe = async (email: string, siwe: string): Promise<void> => {
     const key = `siwe:${email}`;
-    const ttl = Number(process.env.SIWE_EXP) || 60 * 5;
+    const ttl = Number(process.env.SIWE_EXP);
 
     try {
         await redis.set(key, siwe, 'EX', ttl);

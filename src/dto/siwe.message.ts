@@ -12,3 +12,19 @@ export interface SiweFormat {
     requestId?: string;            // optional 고유 ID
     resources?: string[];          // optional 접근하려는 리소스 URI 목록
 }
+
+const CHAIN_ID = Number(process.env.ETH_NET);
+
+export const generateSiwe = (address: string, uri: string, nonce: string, issuedAt: string, requestId: string): SiweFormat => {
+    return {
+        domain: 'ludex.io',
+        address,
+        statement: 'Please sign this message to log in to Ludex.',
+        uri,
+        version: '1',
+        chainId: CHAIN_ID,
+        nonce,
+        iat: issuedAt,
+        requestId: requestId
+    }
+}

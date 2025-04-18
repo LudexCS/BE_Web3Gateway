@@ -1,5 +1,5 @@
 import { SiweRequest } from "../dto/siwe.request.dto";
-import { SiweFormat } from "../dto/siwe.message";
+import {generateSiwe, SiweFormat} from "../dto/siwe.message";
 import { storeSiwe } from "../repository/redis.reposiotry";
 
 export const createSiweMessage = async (siweRequest: SiweRequest, email: string): Promise<string> => {
@@ -8,19 +8,8 @@ export const createSiweMessage = async (siweRequest: SiweRequest, email: string)
     const now = new Date();
     const nonce = generateNonce(); // 랜덤 8자 이상
     const issuedAt = now.toISOString();
-    const CHAIN_ID = Number(process.env.ETH_NET);
 
-    const siweFormat: SiweFormat = {
-        domain: 'ludex.io',
-        address,
-        statement: 'Please sign this message to log in to Ludex.',
-        uri,
-        version: '1',
-        chainId: CHAIN_ID,
-        nonce,
-        iat: issuedAt,
-        requestId: email
-    };
+    const siweFormat: SiweFormat = generateSiwe(address, uri, nonce, issuedAt, email);
     const msg: string = formatSiweMessage(siweFormat);
 
     try {
