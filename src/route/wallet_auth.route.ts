@@ -41,6 +41,21 @@ import {linkWalletControl} from "../controller/link.wallet.controller";
  *         message:
  *           type: string
  *           description: 응답 메시지
+ *     SiweFormat:
+ *       type: string
+ *       description: Sign-In with Ethereum 메시지 포맷
+ *       example:
+ *         'localhost wants you to sign in with your Ethereum account:
+ *         0x225f137127d9067788314bc7fcc1f36746a3c3B5
+ *
+ *         This is a test statement.
+ *
+ *         URI: https://localhost/login
+ *         Version: 1
+ *         Chain ID: 1
+ *         Nonce: abcdef1234567890
+ *         Issued At: 2023-01-30T00:00:00.000Z'
+
  */
 
 const router: Router = Router();
