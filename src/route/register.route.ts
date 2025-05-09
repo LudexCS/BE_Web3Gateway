@@ -18,13 +18,13 @@ import {registerItemControl} from "../controller/item.controller";
  *       properties:
  *         gameId:
  *           type: integer
- *           example: 42
+ *           example: 2
  *         itemName:
  *           type: string
  *           example: "Super RPG Expansion"
  *         seller:
  *           type: string
- *           example: "0x1234567890abcdef1234567890abcdef12345678"
+ *           example: "0x0F4842b72FC72d5919917ffba64929A3D7Bb2E4E"
  *         sharers:
  *           type: array
  *           items:
@@ -32,12 +32,12 @@ import {registerItemControl} from "../controller/item.controller";
  *           example: ["1001", "1002"]
  *         itemPrice:
  *           type: string
- *           example: "1500000000000000000"
+ *           example: "150"
  *         shareTerms:
  *           type: array
  *           items:
  *             type: number
- *           example: [70, 30]
+ *           example: [30]
  *     MessageResponse:
  *       type: object
  *       properties:
