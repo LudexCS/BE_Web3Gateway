@@ -29,4 +29,4 @@ RUN npm run build
 CMD ["node", "dist/server.js"]
 
 # 9. 컨테이너에서 사용할 포트 지정
-EXPOSE 3000
+EXPOSE 4000
