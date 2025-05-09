@@ -1,9 +1,11 @@
 import express, { Express } from 'express';
-import authRoute from './route/wallet_auth.route';
+import authRoute from './route/walletAuth.route';
 import jwtGuard from './middleware/jwt.guard';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import { specs, swaggerUiOptions } from './config/swagger.config';
+import relayRoute from "./route/relay.route";
+import registerRoute from "./route/register.route";
 
 const app : Express = express();
 app.use(express.json());
@@ -19,5 +21,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, swaggerUiOptions));
 app.use('/api/protected', jwtGuard);
 
 app.use('/api/protected/auth', authRoute);
+app.use('/api/relay', relayRoute);
+app.use('/api/protected/register', registerRoute);
 
 export default app;
