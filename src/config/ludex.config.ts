@@ -29,7 +29,7 @@ export function createLudexConfig(contracts: Contracts): ludex.configs.LudexConf
     };
 }
 
-export async function getContracts(): Promise<Contracts> {
+export function getContracts(): Contracts {
     const deploymentMap: Contracts = {};
     const network = contracts.find(c => c.network === "op_sepolia"); // or make dynamic later
 
