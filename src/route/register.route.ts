@@ -37,7 +37,7 @@ import {registerItemControl} from "../controller/item.controller";
  *           type: array
  *           items:
  *             type: number
- *           example: [30]
+ *           example: [3000]
  *     MessageResponse:
  *       type: object
  *       properties:
