@@ -49,7 +49,7 @@ const router: Router = Router();
 
 /**
  * @swagger
- * /item:
+ * /api/protected/register/item:
  *   post:
  *     summary: 스마트컨트랙트에 게임을 아이템으로 등록합니다.
  *     description: 판매자 주소, 수익 분배 대상, 가격 등의 정보를 기반으로 게임을 온체인 아이템으로 등록합니다.
