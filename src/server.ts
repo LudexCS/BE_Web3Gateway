@@ -5,7 +5,7 @@ import AppDataSource from './config/mysql.config';
 // .env 환경변수 사용 setting
 dotenv.config();
 
-const PORT = 3000;
+const PORT = 4000;
 
 async function connectAndStart() {
     let retries = 5;
