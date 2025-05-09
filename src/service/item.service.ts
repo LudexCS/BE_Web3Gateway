@@ -11,7 +11,7 @@ export async function registerItem(itemDto: RegisterItemDto) {
     const itemPrice: bigint = BigInt(itemDto.itemPrice);
     const shareTerms: number[] = itemDto.shareTerms;
 
-    const contracts: Contracts = await getContracts();
+    const contracts: Contracts = getContracts();
     const chainConfig = createChainConfig();
     const ludexConfig = createLudexConfig(contracts);
     const wallet = getWallet();

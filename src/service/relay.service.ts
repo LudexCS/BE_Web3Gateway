@@ -2,7 +2,7 @@ import {Contracts, createLudexConfig, getContracts, getWallet} from "../config/l
 import * as ludex from "ludex";
 
 export async function createRelayer() {
-    const contracts: Contracts = await getContracts();
+    const contracts: Contracts = getContracts();
     const ludexConfig = createLudexConfig(contracts);
     const wallet = getWallet();
 

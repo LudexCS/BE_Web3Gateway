@@ -6,6 +6,7 @@ import swaggerUi from 'swagger-ui-express';
 import { specs, swaggerUiOptions } from './config/swagger.config';
 import relayRoute from "./route/relay.route";
 import registerRoute from "./route/register.route";
+import tokenRoute from "./route/token.route";
 
 const app : Express = express();
 app.use(express.json());
@@ -23,5 +24,6 @@ app.use('/api/protected', jwtGuard);
 app.use('/api/protected/auth', authRoute);
 app.use('/api/relay', relayRoute);
 app.use('/api/protected/register', registerRoute);
+app.use('/api/token', tokenRoute);
 
 export default app;
