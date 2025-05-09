@@ -1,5 +1,6 @@
 import * as ludex from "ludex";
-import {ethers, HDNodeWallet} from "ethers/lib.esm";
+import { ethers } from "ethers";
+import {contracts} from "./contracts.config";
 
 export type Contracts = Record<string, {address: string; abi: any}>;
 
@@ -29,12 +30,25 @@ export function createLudexConfig(contracts: Contracts): ludex.configs.LudexConf
 }
 
 export async function getContracts(): Promise<Contracts> {
-    return await (
-        fetch("http://localhost:3000/contracts")
-            .then(res => res.json()));
+    const deploymentMap: Contracts = {};
+    const network = contracts.find(c => c.network === "op_sepolia"); // or make dynamic later
+
+    if (!network) {
+        throw new Error("No deployment found for specified network");
+    }
+
+    for (const [name, entries] of Object.entries(network.deployments)) {
+        const latest = entries[entries.length - 1]; // use last (latest) entry
+        deploymentMap[name] = {
+            address: latest.address,
+            abi: latest.abi
+        };
+    }
+
+    return deploymentMap;
 }
 
-export function getWallet(): HDNodeWallet {
+export function getWallet() {
     const provider = new ethers.JsonRpcProvider(process.env.RPC_URL as string);
 
     if (!process.env.MNEMONIC_CODE) {

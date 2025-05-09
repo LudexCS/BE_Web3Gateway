@@ -1,9 +1,10 @@
-import {Contracts, createChainConfig, createLudexConfig} from "../config/ludex.config";
+import {Contracts, createLudexConfig, getContracts, getWallet} from "../config/ludex.config";
 import * as ludex from "ludex";
-import {ethers} from "ethers";
 
-export async function createRelayer(contracts: Contracts, wallet: ethers.Wallet) {
+export async function createRelayer() {
+    const contracts: Contracts = await getContracts();
     const ludexConfig = createLudexConfig(contracts);
+    const wallet = getWallet();
 
     const relayer =
         ludex.relay.createLudexRelayMaster(
@@ -14,10 +15,7 @@ export async function createRelayer(contracts: Contracts, wallet: ethers.Wallet)
     return relayer;
 }
 
-export async function handleRelayRequest(
-    relayer: ludex.relay.RelayMaster,
-    relayRequest: ludex.relay.RelayRequest<any>
-): Promise<any> {
+export async function handleRelayRequest(relayer: ludex.relay.RelayMaster, relayRequest: ludex.relay.RelayRequest<any>): Promise<any> {
     try {
         const args = await new Promise<any>((resolve, reject) => {
             relayer.acceptRequest(relayRequest, resolve, reject);
