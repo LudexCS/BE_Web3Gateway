@@ -4,6 +4,9 @@ FROM node:18
 # 2. 작업 디렉토리 설정
 WORKDIR /app
 
+# 외부 모듈 복사 (LudexWeb3Integration)
+COPY ./packages/LudexWeb3Integration ./packages/LudexWeb3Integration
+
 # 3. package.json과 package-lock.json 복사
 COPY package*.json ./
 
