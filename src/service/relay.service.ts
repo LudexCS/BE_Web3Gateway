@@ -9,7 +9,6 @@ export async function createRelayer() {
     const relayer =
         ludex.relay.createLudexRelayMaster(
             ludexConfig,
-            ludex.Address.create(contracts["ERC2771Forwarder"].address),
             wallet);
 
     return relayer;

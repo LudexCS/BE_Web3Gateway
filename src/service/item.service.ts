@@ -1,7 +1,13 @@
 import {RegisterItemDto} from "../dto/item.dto";
 import * as ludex from "ludex";
 import fnv1a from "fnv1a";
-import {Contracts, createChainConfig, createLudexConfig, getContracts, getWallet} from "../config/ludex.config";
+import {
+    Contracts,
+    createPrivateChainConfig,
+    createLudexConfig,
+    getContracts,
+    getWallet
+} from "../config/ludex.config";
 
 export async function registerItem(itemDto: RegisterItemDto) {
     const itemName: string = itemDto.itemName;
@@ -12,7 +18,7 @@ export async function registerItem(itemDto: RegisterItemDto) {
     const shareTerms: number[] = itemDto.shareTerms;
 
     const contracts: Contracts = getContracts();
-    const chainConfig = createChainConfig();
+    const chainConfig = createPrivateChainConfig();
     const ludexConfig = createLudexConfig(contracts);
     const wallet = getWallet();
 
