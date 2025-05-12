@@ -7,7 +7,7 @@ export type Contracts = Record<string, {address: string; abi: any}>;
 export function createPrivateChainConfig (): ludex.configs.ChainConfig
 {
     return {
-        chainId: "0xAA37DC",
+        chainId: "0xaa37dc",
         chainName: "Optimism Sepolia",
         rpcUrls: [process.env.RPC_URL as string],
         nativeCurrency: {
@@ -21,7 +21,7 @@ export function createPrivateChainConfig (): ludex.configs.ChainConfig
 export function createPublicChainConfig (): ludex.configs.ChainConfig
 {
     return {
-        chainId: "0xAA37DC",
+        chainId: "0xaa37dc",
         chainName: "Optimism Sepolia",
         rpcUrls: ["https://sepolia.optimism.io/"],
         nativeCurrency: {
