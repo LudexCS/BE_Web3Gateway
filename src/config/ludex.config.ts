@@ -57,12 +57,11 @@ export function getContracts(): Contracts {
 }
 
 export function getWallet() {
-    const provider = new ethers.JsonRpcProvider(process.env.RPC_URL as string);
-
     if (!process.env.MNEMONIC_CODE) {
         throw new Error("MNEMONIC_CODE is not defined");
     }
 
-    const hdNode = ethers.HDNodeWallet.fromPhrase(process.env.MNEMONIC_CODE);
-    return hdNode.connect(provider);
+    return ethers.Wallet.fromPhrase(
+            process.env.MNEMONIC!,
+            new ethers.JsonRpcProvider(process.env.RPC_URL));
 }

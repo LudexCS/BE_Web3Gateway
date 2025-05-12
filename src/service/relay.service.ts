@@ -16,12 +16,14 @@ export async function createRelayer() {
 
 export async function handleRelayRequest(relayer: ludex.relay.RelayMaster, relayRequest: ludex.relay.RelayRequest<any>): Promise<any> {
     try {
+        console.log("relayRequesting");
         const args = await new Promise<any>((resolve, reject) => {
             relayer.acceptRequest(relayRequest, resolve, reject);
         });
 
         return args;
     } catch (error) {
+        console.log("relayFailed", (error as Error).message);
         console.error("Relay failed:", (error as Error).message);
         throw error;
     }
