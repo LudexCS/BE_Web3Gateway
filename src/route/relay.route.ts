@@ -5,7 +5,9 @@ const router: Router = Router();
 
 router.post('/', async (req: Request, res: Response) => {
     try {
+        console.log("0");
         const args = await relayControl(req);
+        console.log("4");
         res.status(200).json({ args });
     } catch (error) {
         if (error instanceof Error) {
