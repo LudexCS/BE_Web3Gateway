@@ -14,7 +14,25 @@ export async function registerItem(itemDto: RegisterItemDto) {
     const seller: ludex.Address = ludex.Address.create(itemDto.seller);
     const sharers: bigint[] =
         (itemDto.sharers as string[]).map(entry => BigInt(entry))
-    const itemPrice: bigint = BigInt(itemDto.itemPrice);
+    const itemPrice: bigint = (function () {
+        const parts = itemDto.itemPrice.split('.');
+        if(parts.length === 1)
+        {
+            return BigInt(itemDto.itemPrice) * (10n ** 18n);
+        }
+        else if (parts.length === 2)
+        {
+            const intPart = BigInt(parts[0]) * (10n ** 18n);
+            const decimalPartLength = parts[1].length;
+            const decimalPart =
+                BigInt(parts[1]) * (10n ** (18n - BigInt(decimalPartLength)));
+            return intPart + decimalPart;
+        }
+        else
+        {
+            throw new Error(`Invalid number format given: ${itemDto.itemPrice}`);
+        }
+    })();
     const shareTerms: number[] = itemDto.shareTerms;
 
     const contracts: Contracts = getContracts();
