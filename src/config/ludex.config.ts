@@ -4,45 +4,53 @@ import {contracts} from "./contracts.config";
 
 export type Contracts = Record<string, {address: string; abi: any}>;
 
-export function createChainConfig (): ludex.configs.ChainConfig
+export function createPrivateChainConfig (): ludex.configs.ChainConfig
 {
     return {
-        chainId: `0x${(31337).toString(16)}`,
-        chainName: "Hardhat Testnet",
-        rpcUrls: [process.env.RPC_URL as string],
+        chainId: "0xAA37DC",
+        chainName: "Optimism Sepolia",
+        rpcUrls: ["https://sepolia.optimism.io/"],
         nativeCurrency: {
             name: "ETH",
             symbol: "ETH",
             decimals: 18
         }
-    }
+    };
+}
+
+export function createPublicChainConfig (): ludex.configs.ChainConfig
+{
+    return {
+        chainId: "0xAA37DC",
+        chainName: "Optimism Sepolia",
+        rpcUrls: ["https://sepolia.optimism.io/"],
+        nativeCurrency: {
+            name: "ETH",
+            symbol: "ETH",
+            decimals: 18
+        }
+    };
 }
 
 export function createLudexConfig(contracts: Contracts): ludex.configs.LudexConfig
 {
     return {
-        storeAddress: contracts["Store"].address,
-        ledgerAddress: contracts["Ledger"].address,
-        priceTableAddress: contracts["PriceTable"].address,
-        sellerRegistryAddress: contracts["SellerRegistry"].address,
-        itemRegistryAddress: contracts["ItemRegistry"].address
+        sellerRegistryAddress: contracts.SellerRegistry.address,
+        itemRegistryAddress: contracts.ItemRegistry.address,
+        priceTableAddress: contracts.PriceTable.address,
+        paymentProcessorAddress: contracts.PaymentProcessor.address,
+        ledgerAddress: contracts.Ledger.address,
+        storeAddress: contracts.Store.address,
+        forwarderAddress: contracts.ERC2771Forwarder.address
     };
 }
 
 export function getContracts(): Contracts {
     const deploymentMap: Contracts = {};
-    const network = contracts.find(c => c.network === "op_sepolia"); // or make dynamic later
+    const latestDeployment = contracts[contracts.length - 1].deployments;
 
-    if (!network) {
-        throw new Error("No deployment found for specified network");
-    }
-
-    for (const [name, entries] of Object.entries(network.deployments)) {
-        const latest = entries[entries.length - 1]; // use last (latest) entry
-        deploymentMap[name] = {
-            address: latest.address,
-            abi: latest.abi
-        };
+    for (const [name, { address, abi }] of Object.entries(latestDeployment)) {
+        deploymentMap[name] = { address, abi };
     }
 
     return deploymentMap;
