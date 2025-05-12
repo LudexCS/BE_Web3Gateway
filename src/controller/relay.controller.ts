@@ -4,6 +4,7 @@ import {createRelayer, handleRelayRequest} from "../service/relay.service";
 
 export async function relayControl(req: Request) {
     console.log("1");
+    console.log("Properties: " + req.body);
     const relayRequest = ludex.relay.deserializeRelayRequest(req.body);
     console.log("2");
     const relayer = await createRelayer();
