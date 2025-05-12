@@ -26,6 +26,6 @@ app.use('/api/protected/auth', authRoute);
 app.use('/api/relay', relayRoute);
 app.use('/api/protected/register', registerRoute);
 app.use('/api/token', tokenRoute);
-app.use('/api/protected/config', configRoute);
+app.use('/api/config', configRoute);
 
 export default app;

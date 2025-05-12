@@ -5,7 +5,7 @@ const router: Router = Router();
 
 /**
  * @swagger
- * /api/protected/config/get:
+ * /api/config/get:
  *   get:
  *     summary: Get current chain and Ludex configuration
  *     description: Returns the current blockchain network configuration (ChainConfig) and Ludex platform settings (LudexConfig).
