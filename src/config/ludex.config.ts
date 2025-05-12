@@ -9,7 +9,7 @@ export function createPrivateChainConfig (): ludex.configs.ChainConfig
     return {
         chainId: "0xAA37DC",
         chainName: "Optimism Sepolia",
-        rpcUrls: ["https://sepolia.optimism.io/"],
+        rpcUrls: [process.env.RPC_URL as string],
         nativeCurrency: {
             name: "ETH",
             symbol: "ETH",
