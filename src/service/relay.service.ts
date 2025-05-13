@@ -16,36 +16,15 @@ export async function createRelayer() {
 }
 
 export async function handleRelayRequest(relayer: ludex.relay.RelayMaster, relayRequest: ludex.relay.RelayRequest<any>, res: Response): Promise<any> {
-    try {
-        console.log("relayRequesting");
-        const args = await relayer.acceptRequest(
-            relayRequest,
-            (args) => {
-                console.log(`args: ${JSON.stringify(args)}`);
-                res.json({ args });
-            },
-            (error) => {
-                console.log(`error: ${error.message}`);
-                res.json({ error: error.message });
-            });
-
-        return args;
-    } catch (error) {
-        console.error("Relay failed:", (error as Error).message);
-        throw error;
-    }
-}
-
-export function stringifyBigInts(obj: any): any {
-    if (typeof obj === 'bigint') {
-        return obj.toString();
-    } else if (Array.isArray(obj)) {
-        return obj.map(stringifyBigInts);
-    } else if (obj !== null && typeof obj === 'object') {
-        return Object.fromEntries(
-            Object.entries(obj).map(([k, v]) => [k, stringifyBigInts(v)])
-        );
-    } else {
-        return obj;
-    }
+    console.log("relayRequesting");
+    await relayer.acceptRequest(
+        relayRequest,
+        (args) => {
+            console.log(`args: ${JSON.stringify(args)}`);
+            res.status(200).json({ args });
+        },
+        (error) => {
+            console.log(`error: ${error.message}`);
+            res.status(500).json({ error: error.message });
+        });
 }

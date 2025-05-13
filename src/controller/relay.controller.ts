@@ -1,13 +1,9 @@
-import {Request} from "express";
+import {Request, Response} from "express";
 import * as ludex from "ludex";
 import {createRelayer, handleRelayRequest} from "../service/relay.service";
 
-export async function relayControl(req: Request) {
-    console.log("1");
-    console.log("Properties: " + req.body);
+export async function relayControl(req: Request, res: Response) {
     const relayRequest = ludex.relay.deserializeRelayRequest(req.body);
-    console.log("2");
     const relayer = await createRelayer();
-    console.log("3");
-    return await handleRelayRequest(relayer, relayRequest);
+    await handleRelayRequest(relayer, relayRequest, res);
 }
