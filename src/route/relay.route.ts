@@ -9,12 +9,7 @@ router.post('/', async (req: Request, res: Response) => {
         console.log("0");
         const args = await relayControl(req);
         console.log("4");
-        const replacer = (_key: string, value: any) => {
-            return typeof value === 'bigint' ? value.toString() : value;
-        };
-        console.log(`args1: ${JSON.stringify(args)}`);
-        console.log(`args2: ${stringifyBigInts(args)}`);
-        res.status(200).json({ args: JSON.stringify(args) });
+        res.status(200).json({ args });
     } catch (error) {
         if (error instanceof Error) {
             console.error("Error:", error.message);
