@@ -1,5 +1,6 @@
 import {Router, Request, Response} from "express";
 import {relayControl} from "../controller/relay.controller";
+import {stringifyBigInts} from "../service/relay.service";
 
 const router: Router = Router();
 
@@ -12,7 +13,7 @@ router.post('/', async (req: Request, res: Response) => {
             return typeof value === 'bigint' ? value.toString() : value;
         };
 
-        res.status(200).json(JSON.parse(JSON.stringify({ args }, replacer)));
+        res.status(200).json({ args: stringifyBigInts(args) });
     } catch (error) {
         if (error instanceof Error) {
             console.error("Error:", error.message);
