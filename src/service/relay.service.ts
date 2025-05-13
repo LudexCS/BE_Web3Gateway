@@ -1,4 +1,5 @@
 import {Contracts, createLudexConfig, getContracts, getWallet} from "../config/ludex.config";
+import {Response} from "express";
 import * as ludex from "ludex";
 
 export async function createRelayer() {
@@ -14,16 +15,22 @@ export async function createRelayer() {
     return relayer;
 }
 
-export async function handleRelayRequest(relayer: ludex.relay.RelayMaster, relayRequest: ludex.relay.RelayRequest<any>): Promise<any> {
+export async function handleRelayRequest(relayer: ludex.relay.RelayMaster, relayRequest: ludex.relay.RelayRequest<any>, res: Response): Promise<any> {
     try {
         console.log("relayRequesting");
-        const args = await new Promise<any>((resolve, reject) => {
-            relayer.acceptRequest(relayRequest, resolve, reject);
-        });
+        const args = await relayer.acceptRequest(
+            relayRequest,
+            (args) => {
+                console.log(`args: ${JSON.stringify(args)}`);
+                res.json({ args });
+            },
+            (error) => {
+                console.log(`error: ${error.message}`);
+                res.json({ error: error.message });
+            });
 
         return args;
     } catch (error) {
-        console.log("relayFailed", (error as Error).message);
         console.error("Relay failed:", (error as Error).message);
         throw error;
     }
