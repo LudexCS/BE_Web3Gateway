@@ -28,3 +28,17 @@ export async function handleRelayRequest(relayer: ludex.relay.RelayMaster, relay
         throw error;
     }
 }
+
+export function stringifyBigInts(obj: any): any {
+    if (typeof obj === 'bigint') {
+        return obj.toString();
+    } else if (Array.isArray(obj)) {
+        return obj.map(stringifyBigInts);
+    } else if (obj !== null && typeof obj === 'object') {
+        return Object.fromEntries(
+            Object.entries(obj).map(([k, v]) => [k, stringifyBigInts(v)])
+        );
+    } else {
+        return obj;
+    }
+}
