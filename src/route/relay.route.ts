@@ -12,8 +12,9 @@ router.post('/', async (req: Request, res: Response) => {
         const replacer = (_key: string, value: any) => {
             return typeof value === 'bigint' ? value.toString() : value;
         };
-
-        res.status(200).json({ args: stringifyBigInts(args) });
+        console.log(`args1: ${JSON.stringify(args)}`);
+        console.log(`args2: ${stringifyBigInts(args)}`);
+        res.status(200).json({ args: JSON.stringify(args) });
     } catch (error) {
         if (error instanceof Error) {
             console.error("Error:", error.message);
