@@ -8,7 +8,7 @@ export class CryptoWallet {
     @Column({ name: 'user_id' })
     userId: number;
 
-    @Column({ name: 'address', unique: true })
+    @Column({ name: 'address' })
     address: string;
 
     @Column({ name: 'registered_at' })

@@ -10,17 +10,17 @@ const storeIdServiceClient = new StoreIdServiceClient(
 
 export const storeWeb3Id = (
     gameId: number,
-    itemId: bigint,
-    sharerIds: bigint[]
+    itemId: string,
+    sharerIds: string[]
 ): Promise<boolean> => {
     return new Promise((resolve, reject) => {
         const request = new storeIdRequest();
         request.setGameid(gameId);
-        request.setItemid(String(itemId));
+        request.setItemid(itemId);
         if (Array.isArray(sharerIds)) {
-            request.setShareridsList(sharerIds.map(id => String(id)));
+            request.setShareridsList(sharerIds);
         } else {
-            request.setShareridsList([String(sharerIds)]);
+            request.setShareridsList([sharerIds]);
         }
 
         storeIdServiceClient.storeWeb3Id(request, (err, res: BoolResult) => {
