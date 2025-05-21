@@ -51,11 +51,12 @@ export function createLudexConfig(contracts: Contracts): ludex.configs.LudexConf
 export function getContracts(): Contracts {
     const deploymentMap: Contracts = {};
     const latestDeployment = contracts[contracts.length - 1].deployments;
+    console.log(latestDeployment);
 
     for (const [name, { address, abi }] of Object.entries(latestDeployment)) {
         deploymentMap[name] = { address, abi };
     }
-
+    console.log(deploymentMap);
     return deploymentMap;
 }
 
