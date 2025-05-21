@@ -19,7 +19,7 @@ jobs:
           if [ -d "packages/LudexWeb3Integration/.git" ]; then
             cd packages/LudexWeb3Integration && git pull
           else
-            git clone https://github.com/LudexCs/LudexWeb3Integration.git packages/LudexWeb3Integration
+            git clone https://github.com/LudexCS/LudexWeb3Integration.git packages/LudexWeb3Integration
           fi
 
       - name: Log in to Docker Hub
