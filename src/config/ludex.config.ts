@@ -42,6 +42,8 @@ export function createLudexConfig(contracts: Contracts): ludex.configs.LudexConf
         paymentProcessorAddress: contracts.PaymentProcessor.address,
         ledgerAddress: contracts.Ledger.address,
         storeAddress: contracts.Store.address,
+        sellerProxyAddress: contracts.SellerProxy.address,
+        purchaseProxyAddress: contracts.PurchaseProxy.address,
         forwarderAddress: contracts.ERC2771Forwarder.address
     };
 }
