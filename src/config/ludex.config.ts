@@ -56,7 +56,7 @@ export function getContracts(): Contracts {
     for (const [name, { address, abi }] of Object.entries(latestDeployment)) {
         deploymentMap[name] = { address, abi };
     }
-
+    console.log(deploymentMap);
     return deploymentMap;
 }
 
