@@ -38,6 +38,7 @@ export function createLudexConfig(contracts: Contracts): ludex.configs.LudexConf
         sellerRegistryAddress: contracts.SellerRegistry.address,
         itemRegistryAddress: contracts.ItemRegistry.address,
         priceTableAddress: contracts.PriceTable.address,
+        profitEscrowAddress: contracts.ProfitEscrow.address,
         paymentProcessorAddress: contracts.PaymentProcessor.address,
         ledgerAddress: contracts.Ledger.address,
         storeAddress: contracts.Store.address,
