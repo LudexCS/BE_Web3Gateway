@@ -38,9 +38,12 @@ export function createLudexConfig(contracts: Contracts): ludex.configs.LudexConf
         sellerRegistryAddress: contracts.SellerRegistry.address,
         itemRegistryAddress: contracts.ItemRegistry.address,
         priceTableAddress: contracts.PriceTable.address,
+        profitEscrowAddress: contracts.ProfitEscrow.address,
         paymentProcessorAddress: contracts.PaymentProcessor.address,
         ledgerAddress: contracts.Ledger.address,
         storeAddress: contracts.Store.address,
+        sellerProxyAddress: contracts.SellerProxy.address,
+        purchaseProxyAddress: contracts.PurchaseProxy.address,
         forwarderAddress: contracts.ERC2771Forwarder.address
     };
 }
@@ -52,7 +55,6 @@ export function getContracts(): Contracts {
     for (const [name, { address, abi }] of Object.entries(latestDeployment)) {
         deploymentMap[name] = { address, abi };
     }
-
     return deploymentMap;
 }
 
