@@ -12,7 +12,7 @@ import configRoute from "./route/config.route";
 const app : Express = express();
 app.use(express.json());
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: ['http://localhost:3000', 'http://uosludex.com', 'https://uosludex.com'],
     credentials: true,
 }));
 
