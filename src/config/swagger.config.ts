@@ -19,7 +19,7 @@ const options = {
     },
     servers: [
       {
-        url: 'http://api.uosludex.com/web3gateway',
+        url: 'https://api.uosludex.com/web3gateway',
         description: 'API 서버'
       }
     ],
