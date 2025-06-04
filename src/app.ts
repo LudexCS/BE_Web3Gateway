@@ -12,20 +12,20 @@ import configRoute from "./route/config.route";
 const app : Express = express();
 app.use(express.json());
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: ['http://localhost:3000', 'http://uosludex.com', 'https://uosludex.com'],
     credentials: true,
 }));
 
 // Swagger UI 설정
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs, swaggerUiOptions));
+app.use('/web3gateway/api-docs', swaggerUi.serve, swaggerUi.setup(specs, swaggerUiOptions));
 
 // middleware
-app.use('/api/protected', jwtGuard);
+app.use('/web3gateway/api/protected', jwtGuard);
 
-app.use('/api/protected/auth', authRoute);
-app.use('/api/relay', relayRoute);
-app.use('/api/protected/register', registerRoute);
-app.use('/api/token', tokenRoute);
-app.use('/api/config', configRoute);
+app.use('/web3gateway/api/protected/auth', authRoute);
+app.use('/web3gateway/api/relay', relayRoute);
+app.use('/web3gateway/api/protected/register', registerRoute);
+app.use('/web3gateway/api/token', tokenRoute);
+app.use('/web3gateway/api/config', configRoute);
 
 export default app;
