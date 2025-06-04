@@ -4,33 +4,29 @@ import {contracts} from "./contracts.config";
 
 export type Contracts = Record<string, {address: string; abi: any}>;
 
-export function createPrivateChainConfig (): ludex.configs.ChainConfig
-{
-    return {
-        chainId: "0xaa37dc",
-        chainName: "Optimism Sepolia",
-        rpcUrls: [process.env.RPC_URL as string],
-        nativeCurrency: {
-            name: "ETH",
-            symbol: "ETH",
-            decimals: 18
-        }
-    };
-}
+export const mainTokenAddress: string = process.env.MAIN_TOKEN_ADDRESS as string;
 
-export function createPublicChainConfig (): ludex.configs.ChainConfig
-{
-    return {
-        chainId: "0xaa37dc",
-        chainName: "Optimism Sepolia",
-        rpcUrls: ["https://sepolia.optimism.io/"],
-        nativeCurrency: {
-            name: "ETH",
-            symbol: "ETH",
-            decimals: 18
-        }
-    };
-}
+export const privateChainConfig: ludex.configs.ChainConfig = {
+    chainId: "0xaa37dc",
+    chainName: "Optimism Sepolia",
+    rpcUrls: [process.env.RPC_URL as string],
+    nativeCurrency: {
+        name: "ETH",
+        symbol: "ETH",
+        decimals: 18,
+    },
+};
+
+export const publicChainConfig: ludex.configs.ChainConfig = {
+    chainId: "0xaa37dc",
+    chainName: "Optimism Sepolia",
+    rpcUrls: ["https://sepolia.optimism.io/"],
+    nativeCurrency: {
+        name: "ETH",
+        symbol: "ETH",
+        decimals: 18,
+    },
+};
 
 export function createLudexConfig(contracts: Contracts): ludex.configs.LudexConfig
 {
@@ -59,12 +55,17 @@ export function getContracts(): Contracts {
 }
 
 export function getWallet() {
+    if (!process.env.RPC_URL) {
+        throw new Error("RPC URL is not defined");
+    }
+
     const provider = new ethers.JsonRpcProvider(process.env.RPC_URL as string);
 
     if (!process.env.MNEMONIC_CODE) {
         throw new Error("MNEMONIC_CODE is not defined");
     }
 
-    const hdNode = ethers.HDNodeWallet.fromPhrase(process.env.MNEMONIC_CODE);
-    return hdNode.connect(provider);
+    return ethers.Wallet.fromPhrase(
+        process.env.MNEMONIC_CODE,
+        provider);
 }

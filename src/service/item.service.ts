@@ -3,7 +3,7 @@ import * as ludex from "ludex";
 import fnv1a from "fnv1a";
 import {
     Contracts,
-    createPrivateChainConfig,
+    privateChainConfig,
     createLudexConfig,
     getContracts,
     getWallet
@@ -36,7 +36,7 @@ export async function registerItem(itemDto: RegisterItemDto) {
     const shareTerms: number[] = itemDto.shareTerms;
 
     const contracts: Contracts = getContracts();
-    const chainConfig = createPrivateChainConfig();
+    const chainConfig = privateChainConfig;
     const ludexConfig = createLudexConfig(contracts);
     const wallet = getWallet();
 
@@ -68,4 +68,32 @@ export async function registerItem(itemDto: RegisterItemDto) {
             shares);
 
     return { itemId, sharerIds };
+}
+
+export async function checkOnSaleByItemId(itemId: bigint) {
+    const contracts: Contracts = getContracts();
+    const chainConfig = privateChainConfig;
+    const ludexConfig = createLudexConfig(contracts);
+
+    const itemRegistry =
+        ludex.facade
+            .createWeb2UserFacade(chainConfig, ludexConfig)
+            .readonlyAccessItemRegistry();
+
+    return await itemRegistry.checkOnSale(itemId);
+}
+
+export async function suspendSaleByItemId(itemId: bigint) {
+    const contracts: Contracts = getContracts();
+    const chainConfig = privateChainConfig;
+    const ludexConfig = createLudexConfig(contracts);
+
+    const wallet = await ludex.BrowserWalletConnection.create(chainConfig);
+
+    const itemRegistry =
+        ludex.facade
+            .createAdminFacade(chainConfig, ludexConfig, await wallet.getSigner())
+            .adminAccessItemRegistry();
+
+    const suspensions = await itemRegistry.suspendItemSale(itemID);
 }
