@@ -24,7 +24,7 @@ const itemAdministrationServiceImpl: IitemAdministrationServiceServer = {
 
         } catch (error) {
             if (error instanceof Error) {
-                console.error(error.message);
+                console.error("Suspend Item Error: " + error.message);
             }
             else {
                 console.error("Unknown error");
@@ -49,7 +49,7 @@ const itemAdministrationServiceImpl: IitemAdministrationServiceServer = {
 
         } catch (error) {
             if (error instanceof Error) {
-                console.error(error.message);
+                console.error("Resume Item Error: " + error.message);
             }
             else {
                 console.error("Unknown error");
@@ -69,7 +69,7 @@ const itemAdministrationServiceImpl: IitemAdministrationServiceServer = {
 
         } catch (error) {
             if (error instanceof Error) {
-                console.error(error.message);
+                console.error("CheckOnSale Error: " + error.message);
             }
             else {
                 console.error("Unknown error");
