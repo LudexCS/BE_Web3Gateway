@@ -83,17 +83,44 @@ export async function checkOnSaleByItemId(itemId: bigint) {
     return await itemRegistry.checkOnSale(itemId);
 }
 
+/**
+ * Suspends the sale of an item identified by its item ID.
+ *
+ * @param {bigint} itemId - The unique identifier of the item whose sale is to be suspended.
+ * @return {Promise<bigint[]>} 정지된 item Id array.
+ */
 export async function suspendSaleByItemId(itemId: bigint) {
     const contracts: Contracts = getContracts();
     const chainConfig = privateChainConfig;
     const ludexConfig = createLudexConfig(contracts);
 
-    const wallet = await ludex.BrowserWalletConnection.create(chainConfig);
+    const wallet = getWallet();
 
     const itemRegistry =
         ludex.facade
-            .createAdminFacade(chainConfig, ludexConfig, await wallet.getSigner())
+            .createAdminFacade(chainConfig, ludexConfig, wallet)
             .adminAccessItemRegistry();
 
-    const suspensions = await itemRegistry.suspendItemSale(itemID);
+    return await itemRegistry.suspendItemSale(itemId);
+}
+
+/**
+ * Resumes the sale of an item by its unique identifier.
+ *
+ * @param {bigint} itemId - The unique identifier of the item whose sale is to be resumed.
+ * @return {Promise<bigint[]>} 판매 중인 item Id array.
+ */
+export async function resumeSaleByItemId(itemId: bigint) {
+    const contracts: Contracts = getContracts();
+    const chainConfig = privateChainConfig;
+    const ludexConfig = createLudexConfig(contracts);
+
+    const wallet = getWallet();
+
+    const itemRegistry =
+        ludex.facade
+            .createAdminFacade(chainConfig, ludexConfig, wallet)
+            .adminAccessItemRegistry();
+
+    return await itemRegistry.resumeItemSale(itemId);
 }
