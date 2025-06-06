@@ -89,7 +89,7 @@ export async function checkOnSaleByItemId(itemId: bigint) {
  * @param {bigint} itemId - The unique identifier of the item whose sale is to be suspended.
  * @return {Promise<bigint[]>} 정지된 item Id array.
  */
-export async function suspendSaleByItemId(itemId: bigint) {
+export async function suspendSaleByItemId(itemId: bigint): Promise<bigint[]> {
     const contracts: Contracts = getContracts();
     const chainConfig = privateChainConfig;
     const ludexConfig = createLudexConfig(contracts);
@@ -110,7 +110,7 @@ export async function suspendSaleByItemId(itemId: bigint) {
  * @param {bigint} itemId - The unique identifier of the item whose sale is to be resumed.
  * @return {Promise<bigint[]>} 판매 중인 item Id array.
  */
-export async function resumeSaleByItemId(itemId: bigint) {
+export async function resumeSaleByItemId(itemId: bigint): Promise<bigint[]> {
     const contracts: Contracts = getContracts();
     const chainConfig = privateChainConfig;
     const ludexConfig = createLudexConfig(contracts);
