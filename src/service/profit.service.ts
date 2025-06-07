@@ -1,7 +1,7 @@
 import * as ludex from 'ludex';
 import {Contracts, createLudexConfig, getContracts, getWallet, privateChainConfig} from "../config/ludex.config";
 import {findTokenAddress} from "./token.service";
-import {getDelegatedItems} from "../repository/redis.repository";
+import {clearDelegatedItems, getDelegatedItems} from "../repository/redis.repository";
 
 export async function findWholePendingProfit(): Promise<bigint> {
     const contracts: Contracts = getContracts();
@@ -48,6 +48,8 @@ export async function finalizePendingProfit() {
             batch.length = 0;
         }
     }
+
+    await clearDelegatedItems();
 
     console.log("Profit settlement finished");
 }
