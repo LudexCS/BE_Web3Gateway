@@ -1,6 +1,6 @@
 import { SiweRequest } from "../dto/siwe.request.dto";
 import {generateSiwe, SiweFormat} from "../dto/siwe.message";
-import { storeSiwe } from "../repository/redis.reposiotry";
+import { storeSiwe } from "../repository/redis.repository";
 
 export const createSiweMessage = async (siweRequest: SiweRequest, email: string): Promise<string> => {
     const address = siweRequest.address;

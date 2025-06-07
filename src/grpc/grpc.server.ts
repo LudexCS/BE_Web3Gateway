@@ -102,7 +102,10 @@ const iPurchaseServiceImpl: IPurchaseServiceServer = {
             else {
                 console.error("Unknown error");
             }
-            return callback(new Error("Failed to process delegated purchase request"), null);return callback(new Error("Failed "), null);
+            return callback({
+                code: grpc.status.INTERNAL,
+                message: "Failed to process delegated purchase request"
+            }, null);
         }
     }
 };
