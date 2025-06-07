@@ -30,7 +30,7 @@ const router: Router = Router();
  */
 router.get('/get/whole-pending', async (req, res) => {
     try {
-        const result = (await getWholeProfitControl()).toString();
+        const result = (await getWholeProfitControl());
         res.status(200).json({wholePendingProfit: result});
     } catch (error) {
         if (error instanceof Error) {

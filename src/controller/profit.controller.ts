@@ -1,6 +1,6 @@
 import {finalizePendingProfit, findWholePendingProfit} from "../service/profit.service";
 
-export async function getWholeProfitControl(): Promise<bigint> {
+export async function getWholeProfitControl(): Promise<string> {
     return await findWholePendingProfit();
 }
 

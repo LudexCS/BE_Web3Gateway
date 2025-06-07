@@ -3,7 +3,7 @@ import {Contracts, createLudexConfig, getContracts, getWallet, privateChainConfi
 import {findTokenAddress} from "./token.service";
 import {clearDelegatedItems, getDelegatedItems} from "../repository/redis.repository";
 
-export async function findWholePendingProfit(): Promise<bigint> {
+export async function findWholePendingProfit(): Promise<string> {
     const contracts: Contracts = getContracts();
     const chainConfig = privateChainConfig;
     const ludexConfig = createLudexConfig(contracts);
@@ -18,7 +18,12 @@ export async function findWholePendingProfit(): Promise<bigint> {
             .createServiceFacade(chainConfig, ludexConfig, wallet)
             .serviceAccessProfitEscrow();
 
-    return await profitEscrow.getWholePendingProfit(tokenAddress);
+    const profit: bigint = await profitEscrow.getWholePendingProfit(tokenAddress);
+    const raw = profit.toString();
+    const padded = raw.padStart(7, "0");
+    const integerPart = padded.slice(0, -6);
+    const decimalPart = padded.slice(-6).replace(/0+$/, "");
+    return decimalPart ? `${integerPart}.${decimalPart}` : integerPart;
 }
 
 export async function finalizePendingProfit() {
