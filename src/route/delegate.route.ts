@@ -7,8 +7,8 @@ const router: Router = Router();
 router.post('/claim-purchase', async (req, res) => {
     try {
         const dto: RegisterClaimPurchaseDto = req.body;
-        const result = (await claimPurchaseControl(dto));
-        res.status(200).json({result});
+        const { ownerAddress, purchaseId } = (await claimPurchaseControl(dto));
+        res.status(200).json({ ownerAddress, purchaseId });
     } catch (error) {
         if (error instanceof Error) {
             res.status(400).json({message: error.message});
