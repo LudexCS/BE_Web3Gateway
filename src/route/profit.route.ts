@@ -5,7 +5,7 @@ const router: Router = Router();
 
 /**
  * @swagger
- * /get/whole-pending:
+ * /api/admin/profit/get/whole-pending:
  *   get:
  *     summary: 전체 미정산 금액 조회
  *     description: 현재까지 누적된 전체 미정산 수익 금액(BigInt)을 문자열로 반환합니다.
@@ -40,7 +40,7 @@ router.get('/get/whole-pending', async (req, res) => {
 
 /**
  * @swagger
- * /settle/pending-profit:
+ * /api/admin/profit/settle/pending-profit:
  *   post:
  *     summary: 미정산 수익 정산 및 목록 삭제
  *     description: 정산 가능한 항목들을 처리하고, 정산 목록에서 제거합니다.
