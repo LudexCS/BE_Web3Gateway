@@ -10,6 +10,7 @@ import tokenRoute from "./route/token.route";
 import configRoute from "./route/config.route";
 import adminGuard from "./middleware/admin.guard";
 import profitRoute from "./route/profit.route";
+import delegateRoute from "./route/delegate.route";
 
 const app : Express = express();
 app.use(express.json());
@@ -31,5 +32,6 @@ app.use('/web3gateway/api/protected/register', registerRoute);
 app.use('/web3gateway/api/token', tokenRoute);
 app.use('/web3gateway/api/config', configRoute);
 app.use('/web3gateway/api/admin/profit', profitRoute);
+app.use('/web3gateway/api/protected/delegate', delegateRoute);
 
 export default app;

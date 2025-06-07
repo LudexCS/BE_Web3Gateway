@@ -1,4 +1,4 @@
-import {DelegatedPurchaseDto} from "../dto/delegate.dto";
+import {DelegatedPurchaseDto, RegisterClaimPurchaseDto} from "../dto/delegate.dto";
 import {findTokenAddress} from "./token.service";
 import * as ludex from "ludex";
 import {Contracts, createLudexConfig, getContracts, getWallet, privateChainConfig} from "../config/ludex.config";
@@ -30,4 +30,32 @@ export async function delegatedPurchase(delegatedPurchaseDto: DelegatedPurchaseD
     await storeDelegatedItem(itemId.toString());
 
     return purchaseId.toString();
+}
+
+export async function registerClaimPurchase(registerClaimPurchaseDto: RegisterClaimPurchaseDto): Promise<{ ownerAddress: string, purchaseId: string }> {
+    const ownerId = BigInt(registerClaimPurchaseDto.ownerId);
+    const ownerAddress = ludex.Address.create(registerClaimPurchaseDto.ownerAddress);
+    const purchaseIds = [ BigInt(registerClaimPurchaseDto.purchaseId) ];
+
+    const contracts: Contracts = getContracts();
+    const chainConfig = privateChainConfig;
+    const ludexConfig = createLudexConfig(contracts);
+    const wallet = getWallet();
+
+    const purchaseProxy =
+        ludex
+            .facade
+            .createServiceFacade(
+                chainConfig,
+                ludexConfig,
+                wallet)
+            .serviceAccessPurchaseProxy();
+
+    const [resultOwnerAddress, resultPurchaseIDs] =
+        await purchaseProxy.claimPurchaseIDs(
+            ownerId,
+            ownerAddress,
+            purchaseIds);
+
+    return { ownerAddress: resultOwnerAddress.stringValue, purchaseId: resultPurchaseIDs[0].toString() };
 }
