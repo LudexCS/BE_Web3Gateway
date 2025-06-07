@@ -16,6 +16,8 @@ RUN npm install
 # 5. TypeScript 빌드를 위한 추가 패키지 설치
 RUN npm install -g typescript ts-node
 
+RUN npm update
+
 # 6. 소스 코드 복사
 COPY . .
 
