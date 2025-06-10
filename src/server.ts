@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import app from './app';
 import AppDataSource from './config/mysql.config';
-import {startGrpcServer} from "./grpc/itemAdministration.server";
+import {startGrpcServer} from "./grpc/grpc.server";
 
 // .env 환경변수 사용 setting
 dotenv.config();

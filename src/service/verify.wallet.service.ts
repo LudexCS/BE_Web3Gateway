@@ -1,6 +1,6 @@
 import Web3 from "web3";
 import {LinkWalletRequest} from "../dto/link.wallet.dto";
-import {deleteSiwe, getSiwe} from "../repository/redis.reposiotry";
+import {deleteSiwe, getSiwe} from "../repository/redis.repository";
 
 const web3 = new Web3();
 

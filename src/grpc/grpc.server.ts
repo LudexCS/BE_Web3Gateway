@@ -5,6 +5,10 @@ import {
 } from "../generated/itemAdministration_grpc_pb";
 import {checkOnSaleByItemId, resumeSaleByItemId, suspendSaleByItemId} from "../service/item.service";
 import {isOnSaleResponse, itemResponse} from "../generated/itemAdministration_pb";
+import {IPurchaseServiceServer, PurchaseServiceService} from "../generated/delegatePurchase_grpc_pb";
+import {DelegatedPurchaseDto} from "../dto/delegate.dto";
+import {delegatedPurchase} from "../service/delegate.service";
+import {PurchaseResponse} from "../generated/delegatePurchase_pb";
 
 const itemAdministrationServiceImpl: IitemAdministrationServiceServer = {
     suspendItem: async (call, callback) => {
@@ -79,10 +83,38 @@ const itemAdministrationServiceImpl: IitemAdministrationServiceServer = {
     }
 };
 
+const iPurchaseServiceImpl: IPurchaseServiceServer = {
+    delegatedPurchase: async (call, callback) => {
+        try {
+            const itemId = call.request.getItemid();
+            const ownerId = call.request.getOwnerid();
+            const dto: DelegatedPurchaseDto = {itemId: itemId, ownerId: ownerId};
+            const purchaseId = await delegatedPurchase(dto);
+
+            const response = new PurchaseResponse();
+            response.setPurchaseid(purchaseId);
+
+            callback(null, response);
+        } catch (error) {
+            if (error instanceof Error) {
+                console.error("DelegatedPurchase Error: " + error.message);
+            }
+            else {
+                console.error("Unknown error");
+            }
+            return callback({
+                code: grpc.status.INTERNAL,
+                message: "Failed to process delegated purchase request"
+            }, null);
+        }
+    }
+};
+
 export async function startGrpcServer() {
     const server = new grpc.Server();
 
     server.addService(itemAdministrationServiceService, itemAdministrationServiceImpl);
+    server.addService(PurchaseServiceService, iPurchaseServiceImpl);
 
     await new Promise<void>((resolve, reject) => {
         server.bindAsync('0.0.0.0:50052', grpc.ServerCredentials.createInsecure(), (err, port) => {

@@ -8,6 +8,9 @@ import relayRoute from "./route/relay.route";
 import registerRoute from "./route/register.route";
 import tokenRoute from "./route/token.route";
 import configRoute from "./route/config.route";
+import adminGuard from "./middleware/admin.guard";
+import profitRoute from "./route/profit.route";
+import delegateRoute from "./route/delegate.route";
 
 const app : Express = express();
 app.use(express.json());
@@ -21,11 +24,14 @@ app.use('/web3gateway/api-docs', swaggerUi.serve, swaggerUi.setup(specs, swagger
 
 // middleware
 app.use('/web3gateway/api/protected', jwtGuard);
+app.use('/web3gateway/api/admin', adminGuard);
 
 app.use('/web3gateway/api/protected/auth', authRoute);
 app.use('/web3gateway/api/relay', relayRoute);
 app.use('/web3gateway/api/protected/register', registerRoute);
 app.use('/web3gateway/api/token', tokenRoute);
 app.use('/web3gateway/api/config', configRoute);
+app.use('/web3gateway/api/admin/profit', profitRoute);
+app.use('/web3gateway/api/protected/delegate', delegateRoute);
 
 export default app;
